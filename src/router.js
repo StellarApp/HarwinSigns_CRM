@@ -4,6 +4,7 @@ import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
 import RegisterProject from "./views/RegisterProject.vue";
 import Projects from "./views/Projects.vue";
+import ForgotPassword from "./views/ForgotPassword.vue"
 
 Vue.use(Router);
 
@@ -18,6 +19,11 @@ export default new Router({
       path:"/login",
       name: "login",
       component: Login
+    },
+    {
+      path:"/forgot-password",
+      name: "ForgotPassword",
+      component: ForgotPassword
     },
     {
       path:"/register-project",

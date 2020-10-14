@@ -6,10 +6,10 @@ import VueSimpleAlert from "vue-simple-alert";
 import {library} from "@fortawesome/fontawesome-svg-core";
 
 import {
-  faTrash, faEdit, faListUl,faRandom, faUndo, faCheckSquare, faEnvelope, faUser, faPhone, faMapMarkerAlt, faBuilding, faDollarSign
+  faTrash, faEdit, faListUl,faRandom, faUndo, faCheckSquare, faEnvelope, faUser, faPhone, faMapMarkerAlt, faBuilding, faDollarSign, faArrowCircleLeft
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faTrash, faEdit, faListUl,faRandom, faUndo, faCheckSquare, faEnvelope, faUser, faPhone, faMapMarkerAlt, faBuilding, faDollarSign);
+library.add(faTrash, faEdit, faListUl,faRandom, faUndo, faCheckSquare, faEnvelope, faUser, faPhone, faMapMarkerAlt, faBuilding, faDollarSign, faArrowCircleLeft);
 
 Vue.use(VueSimpleAlert, { title: "Success Alert", width: "420px" });
 Vue.config.productionTip = false;

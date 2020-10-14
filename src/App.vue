@@ -12,22 +12,21 @@
 </template>
 
 <script>
-
 import Navigation from "./components/Navigation.vue";
 import Firebase from "firebase";
 import db from "./db";
-import moment from 'moment'
+import moment from "moment";
 
 export default {
   name: "App",
-  data: function () {
+  data: function() {
     return {
       user: null,
-      projects:[]
+      projects: [],
     };
   },
   methods: {
-    logout: function () {
+    logout: function() {
       Firebase.auth()
         .signOut()
         .then(() => {
@@ -35,7 +34,7 @@ export default {
           this.$router.push("login");
         });
     },
-    addProject: function (payload) {
+    addProject: function(payload) {
       const {
         clientFirstName,
         clientLastName,
@@ -62,7 +61,7 @@ export default {
         comment,
       } = payload;
 
-      const currentDateTime = Firebase.firestore.FieldValue.serverTimestamp()
+      const currentDateTime = Firebase.firestore.FieldValue.serverTimestamp();
 
       db.collection("projects").add({
         clientFirstName,
@@ -88,10 +87,14 @@ export default {
         soldDate,
         quoteDate,
         comment,
-        projectName: projectCategory[0] +'-' + projectBusiness + '-' +locationAddress1,
+        projectName:
+          projectCategory[0] + "-" + projectBusiness + "-" + locationAddress1,
         createdBy: this.user.displayName,
-        createdAt: moment(currentDateTime).format('MM/DD/YYYY hh:mm'),
-        projectId: projectCategory[0] + projectType + moment(currentDateTime).format('MMDDYY')
+        createdAt: moment(currentDateTime).format("MM/DD/YYYY hh:mm"),
+        projectId:
+          projectCategory[0] +
+          projectType +
+          moment(currentDateTime).format("MMDDYY"),
       });
     },
   },
@@ -102,13 +105,12 @@ export default {
       }
     });
 
-    db.collection("projects")
-    .onSnapshot(snapShot =>{
-      const snapData = []
+    db.collection("projects").onSnapshot((snapShot) => {
+      const snapData = [];
 
-      snapShot.forEach(doc => {
-
-        snapData.push( {id: doc.id, ... doc.data()}
+      snapShot.forEach((doc) => {
+        snapData.push(
+          { id: doc.id, ...doc.data() }
           // {
           // id: doc.id,
           // client: doc.data().clientFirstName + doc.data().clientLastName,
@@ -116,19 +118,18 @@ export default {
           // projectStatus: doc.data().projectStatus,
           // projectDescription: (!doc.data().projectDescription)? '':doc.data().projectDescription
           // projectLocation:doc.data().projectStatus,
-        // }
-        )
-      })
+          // }
+        );
+      });
 
-      this.projects = snapData.sort((a,b) => {
-        if(a.projectName.toLowerCase < b.projectName.toLowerCase){
+      this.projects = snapData.sort((a, b) => {
+        if (a.projectName.toLowerCase < b.projectName.toLowerCase) {
           return -1;
         } else {
           return 1;
         }
-      })
-    })
-
+      });
+    });
   },
   components: {
     Navigation,
