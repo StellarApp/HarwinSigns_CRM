@@ -7,6 +7,7 @@
       :projects="projects"
       @logout="logout"
       @addProject="addProject"
+      @deleteProject = "deleteProject"
     />
   </div>
 </template>
@@ -97,6 +98,11 @@ export default {
           moment(currentDateTime).format("MMDDYY"),
       });
     },
+    deleteProject: function(payload){
+      db.collection("projects")
+      .doc(payload)
+      .delete();
+    }
   },
   mounted() {
     Firebase.auth().onAuthStateChanged((user) => {
