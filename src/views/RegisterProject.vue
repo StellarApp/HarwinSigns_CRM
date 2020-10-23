@@ -499,7 +499,7 @@
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import MaskedInput from 'vue-masked-input';
-import { stateOptions, categoryOptions, typeOptions, statusOptions} from '../components/options';
+import { stateOptions, categoryOptions, typeOptions, statusOptions} from '../components/Options';
 
 export default {
   data: function () {

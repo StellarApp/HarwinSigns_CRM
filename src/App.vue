@@ -8,6 +8,7 @@
       @logout="logout"
       @addProject="addProject"
       @deleteProject = "deleteProject"
+      @updateProject = "updateProject"
     />
   </div>
 </template>
@@ -106,10 +107,19 @@ export default {
       .doc(payload)
       .delete();
     },
-    editProject: function(payload){
+    updateProject: function(payload){
+      
+      const id = payload.docId;
+      const filtered = Object.keys(payload)
+      .filter(key => key !== 'docId')
+      .reduce((newObj, key) => {
+        newObj[key] = payload[key]
+        return newObj
+      }, {});
+
       projectCollection
-      .doc(payload.id)
-      .update({})
+      .doc(id)
+      .update(filtered)
     }
   },
   mounted() {

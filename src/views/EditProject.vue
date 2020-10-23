@@ -2,7 +2,7 @@
      <transition name="modal"
      class="modal-fade" id="project" tabindex="-1" role="dialog" aria-labelledby="editLabel" aria-hidden="true" >
         <div class="modal-backdrop" role="document">
-            <div class="modal-content mr-5 ml-5">
+            <form class="modal-content mr-5 ml-5" @submit.prevent="handleUpdate(project.id)">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editLabel">Edit Project </h5>
                     <button type="button" class="close"  @click="$emit('close')">
@@ -279,7 +279,7 @@
                       for="quoteDate"
                       >Quote Date</label
                     >
-                      <input type="date" name="quoteDate" v-if="project" v-model="project.quoteDate" class="form-control" @change="itemChange" required>
+                      <input type="date" name="quoteDate" v-if="project" v-model="project.quoteDate" class="form-control" @change="itemChange" >
                     </div>
                       <div class="col form-group">
                       <label
@@ -287,7 +287,7 @@
                       for="quotePrice"
                       >Quote Price</label
                     >
-                      <input type="number" name="quotePrice" v-if="project" v-model="project.quotePrice" class="form-control" @change="itemChange"  required>
+                      <input type="number" name="quotePrice" v-if="project" v-model="project.quotePrice" class="form-control" @change="itemChange"  >
                     </div>
                     </div>
                     <div class="form-row">                    
@@ -297,7 +297,7 @@
                       for="soldDate"
                       >Sold Date</label
                     >
-                      <input type="date" name="soldDate" v-if="project" v-model="project.soldDate" class="form-control" @change="itemChange"  required>
+                      <input type="date" name="soldDate" v-if="project" v-model="project.soldDate" class="form-control" @change="itemChange" >
                     </div>
                       <div class="col form-group">
                       <label
@@ -305,7 +305,7 @@
                       for="soldPrice"
                       >Sold Price</label
                     >
-                      <input type="number" name="soldPrice" v-if="project" v-model="project.soldPrice" class="form-control" @change="itemChange"  required>
+                      <input type="number" name="soldPrice" v-if="project" v-model="project.soldPrice" class="form-control" @change="itemChange" >
                     </div>
                     </div>
                    
@@ -322,9 +322,9 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" @click="$emit('close')">Cancel</button>
-              <button type="button" class="btn btn-primary" @click="updateProduct()" >Save changes</button>
+              <button type="submit" class="btn btn-primary"  >Save changes</button>
             </div>
-          </div>
+          </form>
           </div>
       </transition>
 </template>
@@ -332,7 +332,7 @@
 
 <script>
 import MaskedInput from 'vue-masked-input';
-import { stateOptions, categoryOptions, typeOptions, statusOptions} from '../components/options';
+import { stateOptions, categoryOptions, typeOptions, statusOptions} from '../components/Options';
 
 export default {
   name: "editProject",
@@ -354,109 +354,11 @@ export default {
       
       console.log("new", this.newProject)
     },
-    handleUpdate: function () {
-      const info = {
-        clientFirstName: this.clientFirstName,
-        clientLastName: this.clientLastName,
-        clientEmail: this.clientEmail,
-        clientPhone: this.clientPhone,
-        clientCompany: this.clientCompany,
-        landlordFirstName: this.landlordFirstName,
-        landlordLastName: this.landlordLastName,
-        landlordEmail: this.landlordEmail,
-        landlordPhone: (this.landlordPhone == '__________')? null: this.landlordPhone,
-        locationAddress1: this.locationAddress1,
-        locationAddress2: this.locationAddress2,
-        locationCity: this.locationCity,
-        locationState: this.locationState,
-        locationZipCode: this.locationZipCode,
-        locationCountry: this.locationCountry,
-        projectCategory: this.projectCategory,
-        projectType: this.projectType,
-        projectStatus: this.projectStatus,
-        projectBusiness: this.projectBusiness,
-        projectPrice: this.projectPrice,
-        soldDate: this.soldDate,
-        quoteDate: this.quoteDate,
-        comment: this.comment
-      };
+    handleUpdate: function (id) {
+      this.newProject.docId = id
+      this.$emit('updateProject', this.newProject)
+      this.newProject = {}
 
-      this.$emit("updateProject", info);
-
-
-      this.clientFirstName = null;
-      this.clientLastName = null;
-      this.clientEmail = null;
-      this.clientPhone = null;
-      this.landlordFirstName = null;
-      this.landlordLastName = null;
-      this.landlordEmail = null;
-      this.landlordPhone = null;
-      this.locationAddress1 = null;
-      this.locationAddress2 = null;
-      this.locationCity = null;
-      this.locationState = "TX";
-      this.locationZipCode = null;
-      this.projectCategory = "";
-      this.projectStatus = "";
-      this.soldDate = null;
-      this.quoteDate = null;
-      this.clientCompany = null;
-      this.projectBusiness = null;
-      this.projectPrice = null;
-      this.projectType = "";
-      this.comment = null;
-    },
-
-    checkForm: function () {
-      this.errors = [];
-      if(!this.validEmail(this.clientEmail)){
-        this.errors.push('Valid client email required.');
-      }
-
-      if(!this.validPhone(this.clientPhone)){
-        this.errors.push('Valid client phone number required')
-      }
-
-      if (!this.landlordEmail && !this.landlordPhone) {
-        this.errors.push("Please enter either landlord's phone or email.");
-      } else if(!!this.landlordEmail && !this.validEmail(this.landlordEmail)){
-        this.errors.push('landlord email is invalid')
-      } else if(!!this.landlordPhone.length == 0 && !this.validPhone(this.landlordPhone)){
-        this.errors.push('landlord phone is invalid')
-      }
-
-
-      if(this.projectStatus == ""){
-        this.errors.push("Please select project status")
-      }
-
-      if(this.projectCategory == ""){
-        this.errors.push("Please select project project category")
-      }
-
-      if(!this.validZipCode(this.locationZipCode)){
-        this.errors.push('Valid zip code required')
-      }
-
-      if (this.errors.length == 0) {
-        this.handleAdd();
-        this.successAlert();
-      } else {
-        this.errorAlert();
-      }
-    },
-    validEmail: function(email){
-      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
-    },
-    validZipCode: function(zipCode){
-      const re = /[0-9]{5}/
-      return re.test(zipCode);
-    },
-    validPhone: function(phone){
-      const re = /[0-9]{10}/
-      return re.test(phone);
     },
     successAlert: function(){
       this.$alert(

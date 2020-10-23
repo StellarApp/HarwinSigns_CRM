@@ -27,29 +27,6 @@
 </template>
 
 <script>
-// import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-// import db from "../db";
-
-// export default {
-//   name: "home",
-//   data: function () {
-//     return {
-//       user: null,
-//     };
-//   },
-//   mounted() {
-//     db.collection("users")
-//       .doc("6kdTeImOD8YVujygjd2B")
-//       .get()
-//       .then((snapshot) => {
-//         this.user = snapshot.data().name;
-//       });
-//   },
-//   components: {
-//     FontAwesomeIcon,
-//   },
-//   // props: ["user"]
-// };
 
 export default {
   name: "home",
