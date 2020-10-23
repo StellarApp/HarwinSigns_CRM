@@ -122,13 +122,13 @@
                   />
                   </div>
                 </section>
-                <h4 class="font-weight-light mb-3">Landloard Contact Information</h4>
+                <h4 class="font-weight-light mb-3">Landlord Contact Information</h4>
                 <div class="form-row">
                   <section class="col-sm-6 form-group">
                     <label
                       class="form-control-label sr-only"
-                      for="landloardFirstName"
-                      >landloardFirstName</label
+                      for="landlordFirstName"
+                      >landlordFirstName</label
                     >
                     <div class="input-group">
                        <div class="input-group-prepend">
@@ -139,32 +139,32 @@
                     <input
                       class="form-control"
                       type="text"
-                      id="landloardFirstName"
+                      id="landlordFirstName"
                       placeholder="First Name"
-                      name="landloardFirstName"
+                      name="landlordFirstName"
                       required
-                      v-model="landloardFirstName"
+                      v-model="landlordFirstName"
                     /></div>
                   </section>
                   <section class="col-sm-6 form-group">
                     <label
                       class="form-control-label sr-only"
-                      for="landloardLastName"
-                      >landloardLastName</label
+                      for="landlordLastName"
+                      >landlordLastName</label
                     >
                     <input
                       class="form-control"
                       type="text"
-                      id="landloardLastName"
+                      id="landlordLastName"
                       placeholder="Last Name"
-                      name="landloardLastName"
+                      name="landlordLastName"
                       required
-                      v-model="landloardLastName"
+                      v-model="landlordLastName"
                     />
                   </section>
                 </div>
                 <section class="form-group">
-                  <label class="form-control-label sr-only" for="landloardEmail"
+                  <label class="form-control-label sr-only" for="landlordEmail"
                     >Email</label
                   >
                   <div class="input-group">
@@ -176,15 +176,15 @@
                   <input
                     class="form-control"
                     type="email"
-                    id="landloardEmail"
+                    id="landlordEmail"
                     placeholder="Email Address"
-                    name="landloardEmail"
-                    v-model="landloardEmail"
+                    name="landlordEmail"
+                    v-model="landlordEmail"
                   />
                   </div>
                 </section>
                 <section class="form-group">
-                  <label class="form-control-label sr-only" for="landloardPhone"
+                  <label class="form-control-label sr-only" for="landlordPhone"
                     >Phone</label
                   >
                   <div class="input-group">
@@ -196,11 +196,11 @@
                   <masked-input
                     class="form-control"
                     type="tel"
-                    id="landloardPhone"
+                    id="landlordPhone"
                     placeholder="Contact Phone Number"
-                    name="landloardPhone"
+                    name="landlordPhone"
                     mask="\+\1 (111) 111-1111"
-                    @input="landloardPhone = arguments[1]"
+                    @input="landlordPhone = arguments[1]"
                   /></div>
                 </section>
                 <h4 class="font-weight-light mb-3">Project Detail</h4>
@@ -320,9 +320,9 @@
                   />
                   </div>
                 </section>
-                <section class="col-sm-6 form-group">
-                  <label class="form-control-label sr-only" for="projectPrice"
-                    >Project Quote/Sold Price</label
+                <section class="col-sm-6 form-group" v-if="projectStatus == 'Quote'">
+                  <label class="form-control-label sr-only" for="quotePrice"
+                    >Project Quote Price</label
                   >
                   <div class="input-group">
                   <div class="input-group-prepend">
@@ -333,11 +333,30 @@
                   <input
                     class="form-control"
                     type="number"
-                    id="projectPrice"
-                    placeholder="Project Quote/Sold Price"
-                    required
-                    name="projectPrice"
-                    v-model="projectPrice"
+                    id="quotePrice"
+                    placeholder="Project Quote Price "
+                    name="quotePrice"
+                    v-model="quotePrice"
+                  />
+                  </div>
+                </section>
+                <section class="col-sm-6 form-group" v-if="projectStatus == 'Sold'">
+                  <label class="form-control-label sr-only" for="soldPrice"
+                    >Project Sold Price</label
+                  >
+                  <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <font-awesome-icon icon="dollar-sign"></font-awesome-icon>
+                      </div>
+                  </div>
+                  <input
+                    class="form-control"
+                    type="number"
+                    id="soldPrice"
+                    placeholder="Project Sold Price "
+                    name="soldPrice"
+                    v-model="soldPrice"
                   />
                   </div>
                 </section>
@@ -462,7 +481,7 @@
                       placeholder="(Optional) Leave your comment here ..."
                       name="comment"
                       v-model="comment"
-                    ></textarea>
+                    />
                   </section>
                 <div class="form-group text-right mb-0">
                   <button class="btn btn-primary" type="submit" id="addButton">
@@ -489,10 +508,10 @@ export default {
       clientEmail: null,
       clientPhone: null,
       clientCompany:null,
-      landloardFirstName: null,
-      landloardLastName: null,
-      landloardEmail: null,
-      landloardPhone: null,
+      landlordFirstName: null,
+      landlordLastName: null,
+      landlordEmail: null,
+      landlordPhone: null,
       locationAddress1: null,
       locationAddress2: null,
       locationCity: null,
@@ -500,7 +519,8 @@ export default {
       locationZipCode: null,
       locationCountry: "USA",
       projectBusiness: null,
-      projectPrice: null,
+      quotePrice: null,
+      soldPrice: null,
       projectCategory: "",
       projectType: "",
       projectStatus: "",
@@ -787,10 +807,10 @@ export default {
         clientEmail: this.clientEmail,
         clientPhone: this.clientPhone,
         clientCompany: this.clientCompany,
-        landloardFirstName: this.landloardFirstName,
-        landloardLastName: this.landloardLastName,
-        landloardEmail: this.landloardEmail,
-        landloardPhone: (this.landloardPhone == '__________')? null: this.landloardPhone,
+        landlordFirstName: this.landlordFirstName,
+        landlordLastName: this.landlordLastName,
+        landlordEmail: this.landlordEmail,
+        landlordPhone: (this.landlordPhone == '__________')? null: this.landlordPhone,
         locationAddress1: this.locationAddress1,
         locationAddress2: this.locationAddress2,
         locationCity: this.locationCity,
@@ -801,9 +821,10 @@ export default {
         projectType: this.projectType,
         projectStatus: this.projectStatus,
         projectBusiness: this.projectBusiness,
-        projectPrice: this.projectPrice,
-        soldDate: this.soldDate,
+        quotePrice: this.quotePrice,
         quoteDate: this.quoteDate,
+        soldPrice: this.soldPrice,
+        soldDate: this.soldDate,
         comment: this.comment
       };
 
@@ -814,10 +835,10 @@ export default {
       this.clientLastName = null;
       this.clientEmail = null;
       this.clientPhone = null;
-      this.landloardFirstName = null;
-      this.landloardLastName = null;
-      this.landloardEmail = null;
-      this.landloardPhone = null;
+      this.landlordFirstName = null;
+      this.landlordLastName = null;
+      this.landlordEmail = null;
+      this.landlordPhone = null;
       this.locationAddress1 = null;
       this.locationAddress2 = null;
       this.locationCity = null;
@@ -829,7 +850,8 @@ export default {
       this.quoteDate = null;
       this.clientCompany = null;
       this.projectBusiness = null;
-      this.projectPrice = null;
+      this.quotePrice = null;
+      this.soldPrice = null;
       this.projectType = "";
       this.comment = null;
     },
@@ -844,21 +866,32 @@ export default {
         this.errors.push('Valid client phone number required')
       }
 
-      if (!this.landloardEmail && !this.landloardPhone) {
+      if (!this.landlordEmail && !this.landlordPhone) {
         this.errors.push("Please enter either landlord's phone or email.");
-      } else if(!!this.landloardEmail && !this.validEmail(this.landloardEmail)){
-        this.errors.push('landloard email is invalid')
-      } else if(!!this.landloardPhone.length == 0 && !this.validPhone(this.landloardPhone)){
-        this.errors.push('landloard phone is invalid')
-      }
-
-
-      if(this.projectStatus == ""){
-        this.errors.push("Please select project status")
+      } else if(!!this.landlordEmail && !this.validEmail(this.landlordEmail)){
+        this.errors.push('landlord email is invalid')
+      } else if(!!this.landlordPhone.length == 0 && !this.validPhone(this.landlordPhone)){
+        this.errors.push('landlord phone is invalid')
       }
 
       if(this.projectCategory == ""){
         this.errors.push("Please select project project category")
+      }
+
+      if(this.projectType == ""){
+        this.errors.push("Please select project project type")
+      }
+
+      if(this.projectStatus == ""){
+        this.errors.push("Please select project status")
+      } else if(this.projectStatus == "Sold"){
+        if(!this.soldPrice || !this.soldDate){
+          this.errors.push("Please enter both sold date & price")
+        }
+      } else if(this.projectStatus == "Quote"){
+        if(!this.quotePrice || !this.quoteDate){
+          this.errors.push("Please enter both quote date & price")
+        }
       }
 
       if(!this.validZipCode(this.locationZipCode)){

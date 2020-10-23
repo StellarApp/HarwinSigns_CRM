@@ -15,7 +15,7 @@
 <script>
 import Navigation from "./components/Navigation.vue";
 import Firebase from "firebase";
-import db from "./db";
+import { auth, projectCollection } from "./db";
 import moment from "moment";
 
 export default {
@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     logout: function() {
-      Firebase.auth()
+      auth
         .signOut()
         .then(() => {
           this.user = null;
@@ -42,10 +42,10 @@ export default {
         clientEmail,
         clientPhone,
         clientCompany,
-        landloardFirstName,
-        landloardLastName,
-        landloardEmail,
-        landloardPhone,
+        landlordFirstName,
+        landlordLastName,
+        landlordEmail,
+        landlordPhone,
         locationAddress1,
         locationAddress2,
         locationCity,
@@ -56,7 +56,8 @@ export default {
         projectCategory,
         projectType,
         projectStatus,
-        projectPrice,
+        soldPrice,
+        quotePrice,
         soldDate,
         quoteDate,
         comment,
@@ -64,16 +65,16 @@ export default {
 
       const currentDateTime = Firebase.firestore.FieldValue.serverTimestamp();
 
-      db.collection("projects").add({
+      projectCollection.add({
         clientFirstName,
         clientLastName,
         clientEmail,
         clientPhone,
         clientCompany,
-        landloardFirstName,
-        landloardLastName,
-        landloardEmail,
-        landloardPhone,
+        landlordFirstName,
+        landlordLastName,
+        landlordEmail,
+        landlordPhone,
         locationAddress1,
         locationAddress2,
         locationCity,
@@ -84,10 +85,12 @@ export default {
         projectCategory,
         projectType,
         projectStatus,
-        projectPrice,
+        soldPrice,
+        quotePrice,
         soldDate,
         quoteDate,
         comment,
+        projectDescription: '',
         projectName:
           projectCategory[0] + "-" + projectBusiness + "-" + locationAddress1,
         createdBy: this.user.displayName,
@@ -99,9 +102,14 @@ export default {
       });
     },
     deleteProject: function(payload){
-      db.collection("projects")
+      projectCollection
       .doc(payload)
       .delete();
+    },
+    editProject: function(payload){
+      projectCollection
+      .doc(payload.id)
+      .update({})
     }
   },
   mounted() {
@@ -111,7 +119,7 @@ export default {
       }
     });
 
-    db.collection("projects").onSnapshot((snapShot) => {
+    projectCollection.onSnapshot((snapShot) => {
       const snapData = [];
 
       snapShot.forEach((doc) => {
