@@ -36,7 +36,7 @@
 </template>
 <script>
 export default {
-  name: "navigation",
+  name: "Navigation",
   props: ["user"]
 };
 </script>

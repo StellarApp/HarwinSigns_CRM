@@ -125,14 +125,6 @@ export default {
       snapShot.forEach((doc) => {
         snapData.push(
           { id: doc.id, ...doc.data() }
-          // {
-          // id: doc.id,
-          // client: doc.data().clientFirstName + doc.data().clientLastName,
-          // projectName: doc.data().projectName,
-          // projectStatus: doc.data().projectStatus,
-          // projectDescription: (!doc.data().projectDescription)? '':doc.data().projectDescription
-          // projectLocation:doc.data().projectStatus,
-          // }
         );
       });
 

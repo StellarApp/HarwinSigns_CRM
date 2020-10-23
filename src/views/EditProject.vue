@@ -41,12 +41,10 @@
                       for="projectDescription"
                       >Project Description</label
                     >
-                   <textarea class="form-control"  type="number" v-if="project" v-model="project.projectDescription"  />
+                   <textarea class="form-control" name="projectDescription" type="number" v-if="project" v-model="project.projectDescription" @change="itemChange" />
                 </div>
                 </div>
                 <hr/>
-
-
 
                 <div class="row">
                   <!-- Client Information -->
@@ -68,7 +66,7 @@
                       for="clientLastName"
                       >Last Name</label
                     >
-                      <input type="text" class="form-control" v-if="project" v-model="project.clientLastName"  required>
+                      <input type="text" name="clientLastName" class="form-control" v-if="project" v-model="project.clientLastName" @change="itemChange"  required>
                     </div>
                     </div>
                     <div class="form-group">
@@ -77,7 +75,7 @@
                       for="clientCompany"
                       >Company</label
                     >
-                      <input type="text" v-if="project" v-model="project.clientCompany" class="form-control" required>
+                      <input type="text" name="clientCompany" v-if="project" v-model="project.clientCompany" class="form-control" @change="itemChange" required>
                     </div>
                     <div class="form-group">
                       <label
@@ -85,7 +83,7 @@
                       for="clientEmail"
                       >Email</label
                     >
-                      <input type="email" v-if="project" v-model="project.clientEmail" class="form-control" required>
+                      <input type="email" name="clientEmail" v-if="project" v-model="project.clientEmail" class="form-control" @change="itemChange" required >
                     </div>
                     <div class="form-group">
                       <label
@@ -93,7 +91,7 @@
                       for="clientPhone"
                       >Phone</label
                     >
-                      <input type="number" v-if="project" v-model="project.clientPhone" class="form-control" required>
+                      <masked-input name="clientPhone" v-if="project" v-model="project.clientPhone" class="form-control" @change="itemChange" mask="\+\1 (111) 111-1111" required />
                     </div>
 
                   </div>
@@ -109,7 +107,7 @@
                       for="landlordFirstName"
                       >First Name</label
                     >
-                      <input type="text" v-if="project" v-model="project.landlordFirstName" class="form-control" required>
+                      <input type="text" name="landlordFirstName" v-if="project" v-model="project.landlordFirstName" class="form-control" @change="itemChange" required>
                     </div>
                     <div class="col form-group">
                       <label
@@ -117,7 +115,7 @@
                       for="landlordLastName"
                       >Last Name</label
                     >
-                      <input type="text" v-if="project" v-model="project.landlordLastName" class="form-control" required>
+                      <input type="text" name="landlordLastName" v-if="project" v-model="project.landlordLastName" class="form-control" @change="itemChange" required>
                     </div>
                     </div>
                     <div class="form-group">
@@ -126,7 +124,7 @@
                       for="landlordEmail"
                       >Email</label
                     >
-                      <input type="email" v-if="project" v-model="project.landlordEmail" class="form-control" >
+                      <input type="email" name="landlordEmail" v-if="project" v-model="project.landlordEmail" class="form-control" @change="itemChange" >
                     </div>
                     <div class="form-group">
                       <label
@@ -134,7 +132,7 @@
                       for="landlordPhone"
                       >Phone</label
                     >
-                      <input type="number" v-if="project" v-model="project.landlordPhone" class="form-control" >
+                      <masked-input name="landlordPhone" v-if="project" v-model="project.landlordPhone" class="form-control" @change="itemChange" mask="\+\1 (111) 111-1111" />
                     </div>
                     <!-- <div class="form-group">
                       <label for="product_image">Product Images</label>
@@ -152,7 +150,7 @@
                       for="locationAddress1"
                       >Street Address 1</label
                     >
-                      <input type="text" v-if="project" v-model="project.locationAddress1" class="form-control" required>
+                      <input type="text" name="locationAddress1" v-if="project" v-model="project.locationAddress1" class="form-control" @change="itemChange" required>
                     </div>
                      <div class="form-group">
                       <label
@@ -160,7 +158,7 @@
                       for="locationAddress2"
                       >Street Address 2</label
                     >
-                      <input type="text" v-if="project" v-model="project.locationAddress2" class="form-control" >
+                      <input type="text" name="locationAddress2" v-if="project" v-model="project.locationAddress2" class="form-control" @change="itemChange" >
                     </div>
                      <div class="form-group">
                       <label
@@ -168,7 +166,7 @@
                       for="locationCity"
                       >City</label
                     >
-                      <input type="text" v-if="project" v-model="project.locationCity" class="form-control" >
+                      <input type="text" name="locationCity" v-if="project" v-model="project.locationCity" class="form-control" @change="itemChange" >
                     </div>
                      <div class="form-group">
                     <label
@@ -176,7 +174,7 @@
                       for="locationState"
                       >State</label
                     >
-                    <select class="form-control" v-if="project" v-model="project.locationState">
+                    <select class="form-control" name="locationState" v-if="project" v-model="project.locationState" @change="itemChange">
                       <option
                         v-for="(option, index) in stateOptions"
                         v-bind:key="index"
@@ -193,7 +191,7 @@
                       for="locationZipCode"
                       >Zip Code</label
                     >
-                      <input type="text" v-if="project" v-model="project.locationZipCode" class="form-control" required>
+                      <masked-input name="locationZipCode" v-if="project" v-model="project.locationZipCode" class="form-control" @change="itemChange" mask="11111" required/>
                     </div>
                      <div class="col form-group">
                       <label
@@ -201,7 +199,7 @@
                       for="locationCountry"
                       >Country</label
                     >
-                      <input type="text" v-if="project" v-model="project.locationCountry" class="form-control" required>
+                      <input type="text" name="locationCountry" v-if="project" v-model="project.locationCountry" class="form-control" @change="itemChange" required>
                     </div>
                     </div>
                   </div>
@@ -209,13 +207,47 @@
                   <div class="col-md-3">
                     <h6 class="display-6">Job Details</h6>
                     <hr>
+                     <div class="form-row">                    
+                      <div class="col form-group">
+                      <label
+                      class="form-control-label"
+                      for="projectCategory"
+                      >Category</label
+                    >
+                      <select name="projectCategory" v-if="project" v-model="project.projectCategory" class="form-control" @change="itemChange" required>
+                        <option
+                          v-for="(option, i) in categoryOptions"
+                          v-bind:key="i"
+                          v-bind:value="option.value"
+                        >
+                        {{option.value}}
+                        </option>
+                      </select>
+                    </div>
+                      <div class="col form-group">
+                      <label
+                      class="form-control-label"
+                      for="projectType"
+                      >Quote Price</label
+                    >
+                      <select name="projectType" v-if="project" v-model="project.projectType" class="form-control" @change="itemChange"  required>
+                        <option
+                          v-for="(option, i) in typeOptions"
+                          v-bind:key="i"
+                          v-bind:value="option.code"
+                        >
+                        {{option.value}}
+                        </option>
+                      </select>
+                    </div>
+                    </div>
                      <div class="form-group">
                       <label
                       class="form-control-label"
                       for="projectBusiness"
                       >Job Site Business Name</label
                     >
-                      <input type="text" v-if="project" v-model="project.projectBusiness" class="form-control" >
+                      <input type="text" name="projectBusiness" v-if="project" v-model="project.projectBusiness" class="form-control" @change="itemChange" required>
                     </div>
                     <div class="form-group">
                       <label
@@ -223,7 +255,22 @@
                       for="projectStatus"
                       >Status</label
                     >
-                      <input type="text" v-if="project" v-model="project.projectStatus" class="form-control" required>
+                      <select
+                      class="form-control"
+                      id="projectStatus"
+                      name="projectStatus"
+                      v-if="project"
+                      v-model="project.projectStatus"
+                      @change="itemChange"
+                      >
+                    <option
+                      v-for="(option, i) in statusOptions"
+                      v-bind:key="i"
+                      v-bind:value="option.value"
+                    >
+                    {{option.value}}
+                    </option>
+                    </select>
                     </div>
                     <div class="form-row">                    
                       <div class="col form-group">
@@ -232,7 +279,7 @@
                       for="quoteDate"
                       >Quote Date</label
                     >
-                      <input type="date" v-if="project" v-model="project.quoteDate" class="form-control" required>
+                      <input type="date" name="quoteDate" v-if="project" v-model="project.quoteDate" class="form-control" @change="itemChange" required>
                     </div>
                       <div class="col form-group">
                       <label
@@ -240,7 +287,7 @@
                       for="quotePrice"
                       >Quote Price</label
                     >
-                      <input type="number" v-if="project" v-model="project.quotePrice" class="form-control" required>
+                      <input type="number" name="quotePrice" v-if="project" v-model="project.quotePrice" class="form-control" @change="itemChange"  required>
                     </div>
                     </div>
                     <div class="form-row">                    
@@ -250,7 +297,7 @@
                       for="soldDate"
                       >Sold Date</label
                     >
-                      <input type="date" v-if="project" v-model="project.soldDate" class="form-control" required>
+                      <input type="date" name="soldDate" v-if="project" v-model="project.soldDate" class="form-control" @change="itemChange"  required>
                     </div>
                       <div class="col form-group">
                       <label
@@ -258,7 +305,7 @@
                       for="soldPrice"
                       >Sold Price</label
                     >
-                      <input type="number" v-if="project" v-model="project.soldPrice" class="form-control" required>
+                      <input type="number" name="soldPrice" v-if="project" v-model="project.soldPrice" class="form-control" @change="itemChange"  required>
                     </div>
                     </div>
                    
@@ -268,13 +315,13 @@
                       for="comment"
                       >Comment</label
                     >
-                      <textarea  v-if="project" v-model="project.comment" class="form-control" />
+                      <textarea name="comment" v-if="project" v-model="project.comment" class="form-control" @change="itemChange"  />
                     </div>
                   </div>
                 </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" @click="$emit('close')">Close</button>
+              <button type="button" class="btn btn-secondary" @click="$emit('close')">Cancel</button>
               <button type="button" class="btn btn-primary" @click="updateProduct()" >Save changes</button>
             </div>
           </div>
@@ -284,289 +331,28 @@
 
 
 <script>
+import MaskedInput from 'vue-masked-input';
+import { stateOptions, categoryOptions, typeOptions, statusOptions} from '../components/options';
+
 export default {
   name: "editProject",
   data: function () {
     return {
-      updatedProject: {},
-      categoryOptions:[
-        {
-          value: "Sign"          
-        },
-        {
-          value: "Print"
-        }
-      ],
-      typeOptions:[
-        {
-          category:"Sign",
-          value:"Acrylic Sign",
-          code:"AS"
-          },
-        {
-          category:"Print",
-          value:"Vinyl",
-          code: "VL"},
-        {
-          category:"Print",
-          value:"Window Decals",
-          code: "WD"}
-      ],
-      statusOptions: [
-        {
-          value: "Quote"
-        },
-        {
-          value: "Sold"
-        }
-      ],
+      newProject: {},
+      stateOptions,
+      categoryOptions,
+      typeOptions,
+      statusOptions,
       errors: [],
-      stateOptions: [
-        {
-          name: "Alabama",
-          abbreviation: "AL",
-        },
-        {
-          name: "Alaska",
-          abbreviation: "AK",
-        },
-        {
-          name: "American Samoa",
-          abbreviation: "AS",
-        },
-        {
-          name: "Arizona",
-          abbreviation: "AZ",
-        },
-        {
-          name: "Arkansas",
-          abbreviation: "AR",
-        },
-        {
-          name: "California",
-          abbreviation: "CA",
-        },
-        {
-          name: "Colorado",
-          abbreviation: "CO",
-        },
-        {
-          name: "Connecticut",
-          abbreviation: "CT",
-        },
-        {
-          name: "Delaware",
-          abbreviation: "DE",
-        },
-        {
-          name: "District Of Columbia",
-          abbreviation: "DC",
-        },
-        {
-          name: "Federated States Of Micronesia",
-          abbreviation: "FM",
-        },
-        {
-          name: "Florida",
-          abbreviation: "FL",
-        },
-        {
-          name: "Georgia",
-          abbreviation: "GA",
-        },
-        {
-          name: "Guam",
-          abbreviation: "GU",
-        },
-        {
-          name: "Hawaii",
-          abbreviation: "HI",
-        },
-        {
-          name: "Idaho",
-          abbreviation: "ID",
-        },
-        {
-          name: "Illinois",
-          abbreviation: "IL",
-        },
-        {
-          name: "Indiana",
-          abbreviation: "IN",
-        },
-        {
-          name: "Iowa",
-          abbreviation: "IA",
-        },
-        {
-          name: "Kansas",
-          abbreviation: "KS",
-        },
-        {
-          name: "Kentucky",
-          abbreviation: "KY",
-        },
-        {
-          name: "Louisiana",
-          abbreviation: "LA",
-        },
-        {
-          name: "Maine",
-          abbreviation: "ME",
-        },
-        {
-          name: "Marshall Islands",
-          abbreviation: "MH",
-        },
-        {
-          name: "Maryland",
-          abbreviation: "MD",
-        },
-        {
-          name: "Massachusetts",
-          abbreviation: "MA",
-        },
-        {
-          name: "Michigan",
-          abbreviation: "MI",
-        },
-        {
-          name: "Minnesota",
-          abbreviation: "MN",
-        },
-        {
-          name: "Mississippi",
-          abbreviation: "MS",
-        },
-        {
-          name: "Missouri",
-          abbreviation: "MO",
-        },
-        {
-          name: "Montana",
-          abbreviation: "MT",
-        },
-        {
-          name: "Nebraska",
-          abbreviation: "NE",
-        },
-        {
-          name: "Nevada",
-          abbreviation: "NV",
-        },
-        {
-          name: "New Hampshire",
-          abbreviation: "NH",
-        },
-        {
-          name: "New Jersey",
-          abbreviation: "NJ",
-        },
-        {
-          name: "New Mexico",
-          abbreviation: "NM",
-        },
-        {
-          name: "New York",
-          abbreviation: "NY",
-        },
-        {
-          name: "North Carolina",
-          abbreviation: "NC",
-        },
-        {
-          name: "North Dakota",
-          abbreviation: "ND",
-        },
-        {
-          name: "Northern Mariana Islands",
-          abbreviation: "MP",
-        },
-        {
-          name: "Ohio",
-          abbreviation: "OH",
-        },
-        {
-          name: "Oklahoma",
-          abbreviation: "OK",
-        },
-        {
-          name: "Oregon",
-          abbreviation: "OR",
-        },
-        {
-          name: "Palau",
-          abbreviation: "PW",
-        },
-        {
-          name: "Pennsylvania",
-          abbreviation: "PA",
-        },
-        {
-          name: "Puerto Rico",
-          abbreviation: "PR",
-        },
-        {
-          name: "Rhode Island",
-          abbreviation: "RI",
-        },
-        {
-          name: "South Carolina",
-          abbreviation: "SC",
-        },
-        {
-          name: "South Dakota",
-          abbreviation: "SD",
-        },
-        {
-          name: "Tennessee",
-          abbreviation: "TN",
-        },
-        {
-          name: "Texas",
-          abbreviation: "TX",
-        },
-        {
-          name: "Utah",
-          abbreviation: "UT",
-        },
-        {
-          name: "Vermont",
-          abbreviation: "VT",
-        },
-        {
-          name: "Virgin Islands",
-          abbreviation: "VI",
-        },
-        {
-          name: "Virginia",
-          abbreviation: "VA",
-        },
-        {
-          name: "Washington",
-          abbreviation: "WA",
-        },
-        {
-          name: "West Virginia",
-          abbreviation: "WV",
-        },
-        {
-          name: "Wisconsin",
-          abbreviation: "WI",
-        },
-        {
-          name: "Wyoming",
-          abbreviation: "WY",
-        },
-      ],
     };
   },
   methods: {
     itemChange: function(e){
-      // Vue.set(e.dataItem, e.field, e.value)
+
+      const { value, name } = e.target
+      this.newProject[name] = value
       
-      console.log("change", e.target.value)
-      console.log("change", e.target.name)
+      console.log("new", this.newProject)
     },
     handleUpdate: function () {
       const info = {
@@ -688,6 +474,9 @@ export default {
         }
       )
     }
+  },
+  components: {
+    MaskedInput                         
   },
   props: ["project"]
 };
